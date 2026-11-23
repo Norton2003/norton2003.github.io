@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Riley Norton · Portfolio</title>
+<meta name="description" content="Riley Norton: mechanical engineering student at Texas Tech, Formula SAE cooling design lead and professional welder.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="#top"><i></i><span id="navName">Riley Norton</span></a>
+    <nav class="links" aria-label="Sections">
+      <a href="#story" class="opt">Story</a>
+      <a href="#projects">Projects</a>
+      <a href="#welding">Welding</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="band hero">
+    <div class="wrap top">
+      <div>
+        <div class="sheet"><b>Sheet 01</b> Portfolio</div>
+        <h1 id="heroName">Riley Norton</h1>
+        <div class="role" id="heroRole"></div>
+        <p class="lede" id="heroIntro"></p>
+        <div class="cta">
+          <a class="btn" href="#projects">See my projects</a>
+          <a class="btn ghost" id="heroResume" href="#">Résumé (PDF)</a>
+          <a class="btn ghost" id="heroLinkedin" href="#">LinkedIn</a>
+        </div>
+      </div>
+      <div class="drawing" aria-label="Line drawing of a heat exchanger with coolant flowing through it">
+        <svg viewBox="0 0 640 440" preserveAspectRatio="xMidYMax meet" role="img">
+          <defs>
+            <pattern id="fins" width="10" height="30" patternUnits="userSpaceOnUse" x="116" y="80">
+              <rect x="0" y="0" width="10" height="7" class="ink" stroke-width="1"/>
+              <path d="M0 7 L5 30 L10 7" class="thin"/>
+            </pattern>
+            <g id="bead"><path d="M0 0 a5 5 0 0 1 10 0" stroke="var(--red)" fill="none" stroke-width="2"/></g>
+          </defs>
+          <!-- dimension line -->
+          <path d="M116 44 V64 M524 44 V64 M116 54 H524" class="thin"/>
+          <path d="M116 54 l10 -4 v8 z M524 54 l-10 -4 v8 z" fill="currentColor" style="color:var(--mute)"/>
+          <text x="320" y="46" text-anchor="middle">Core width, sized by cooling calculator</text>
+          <!-- pipes (hollow) -->
+          <path d="M14 30 H93 V70 M547 350 V404 H632" stroke="var(--ink)" stroke-width="16" fill="none"/>
+          <path d="M14 30 H93 V70 M547 350 V404 H632" stroke="var(--steel)" stroke-width="11" fill="none"/>
+          <!-- tanks and core -->
+          <rect x="116" y="80" width="408" height="260" style="fill:url(#fins);stroke:var(--ink)" stroke-width="2"/>
+          <rect x="70" y="70" width="46" height="280" rx="10" class="ink" stroke-width="2.5" fill="var(--steel)"/>
+          <rect x="524" y="70" width="46" height="280" rx="10" class="ink" stroke-width="2.5" fill="var(--steel)"/>
+          <!-- weld bead at inlet -->
+          <g transform="translate(80 72)"><use href="#bead"/><use href="#bead" x="6"/><use href="#bead" x="12"/><use href="#bead" x="18"/><use href="#bead" x="24"/></g>
+          <path d="M106 68 L140 24" class="thin"/>
+          <text x="144" y="22">TIG weld</text>
+          <!-- coolant flow -->
+          <path d="M14 30 H93 V210 H547 V404 H632" class="flow"/>
+          <text x="14" y="16">Coolant in</text>
+          <text x="632" y="432" text-anchor="end">Coolant out</text>
+          <path d="M320 340 V362" class="thin"/>
+          <text x="320" y="378" text-anchor="middle">Fin and tube core</text>
+          <!-- title block -->
+          <g class="tb">
+            <rect x="14" y="392" width="300" height="42" class="thin" fill="var(--bg)"/>
+            <path d="M14 413 H314 M224 392 V434" class="thin"/>
+            <text x="22" y="407">HX-01 · Formula heat exchanger</text>
+            <text x="22" y="428">Drawn: R. Norton</text>
+            <text x="232" y="407">Sheet 1 of 1</text>
+            <text x="232" y="428">Rev A</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="wrap stats" id="stats"></div>
+  </section>
+
+  <section class="band" id="story">
+    <div class="wrap story">
+      <div>
+        <div class="sheet"><b>Sheet 02</b> Story</div>
+        <h2>From the welding booth to the design office</h2>
+        <div class="media portrait" id="portrait"></div>
+      </div>
+      <ol class="tl" id="timeline"></ol>
+    </div>
+  </section>
+
+  <section class="band" id="projects" style="background:var(--steel);border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sheet"><b>Sheet 03</b> Projects</div>
+      <div class="head">
+        <div>
+          <h2>Things I've designed and built</h2>
+          <p class="lede" style="margin-top:10px">Open any project for the full case study: the problem, my process, photos, video and documents.</p>
+        </div>
+        <div class="filters" id="filters" role="group" aria-label="Filter projects"></div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="band shop" id="welding">
+    <div class="wrap">
+      <div class="sheet"><b>Sheet 04</b> Welding &amp; fabrication</div>
+      <div class="bead" aria-hidden="true"></div>
+      <h2>Four years under the hood</h2>
+      <p class="lede" id="weldIntro" style="margin-top:12px"></p>
+      <div class="skills" id="skills"></div>
+      <div class="car" id="weldCar"></div>
+      <div class="dl" id="certs"></div>
+    </div>
+  </section>
+
+  <section class="band" id="experience">
+    <div class="wrap">
+      <div class="sheet"><b>Sheet 05</b> Experience</div>
+      <h2 style="margin-bottom:24px">Work &amp; leadership</h2>
+      <div class="exp">
+        <div id="jobs"></div>
+        <aside class="edu">
+          <h3>Education</h3>
+          <div id="edu"></div>
+          <a class="btn" id="eduResume" href="#" style="margin-top:12px">Download résumé</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="band contact" id="contact">
+    <div class="wrap">
+      <div>
+        <div class="sheet"><b>Sheet 06</b> Contact</div>
+        <h2>Let's build something.</h2>
+        <p style="margin-top:14px;font-size:18px">Open to internships, co-ops and full-time mechanical design roles from 2028.</p>
+        <div class="cta" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px">
+          <a class="btn" id="cResume" href="#">Résumé (PDF)</a>
+          <a class="btn ghost" id="cLinkedin" href="#">LinkedIn</a>
+        </div>
+      </div>
+      <div class="clist" id="clist"></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span id="foot"></span><a href="#top">Back to top ↑</a></div></footer>
+
+<dialog id="drawer" aria-labelledby="dTitle">
+  <div class="dh"><span id="dSheet"></span><button id="dClose" aria-label="Close">×</button></div>
+  <div class="db" id="dBody"></div>
+</dialog>
+
+<script src="data/content.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
