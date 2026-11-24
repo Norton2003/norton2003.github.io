@@ -13,7 +13,9 @@
   const media = (m, cls = "") => {
     if (!m || !m.src) return `<div class="media ${cls}">${slot(m)}</div>`;
     let inner;
-    if (m.type === "video") inner = `<video src="${esc(m.src)}" controls preload="metadata" playsinline></video>`;
+    if (m.type === "video") inner = m.loop
+      ? `<video src="${esc(m.src)}" autoplay muted loop playsinline preload="metadata"></video>`
+      : `<video src="${esc(m.src)}" controls muted playsinline preload="metadata"></video>`;
     else if (m.type === "youtube") inner = `<iframe src="https://www.youtube-nocookie.com/embed/${esc(m.src)}" title="${esc(m.caption || "Video")}" style="position:absolute;inset:0;width:100%;height:100%;border:0" allowfullscreen loading="lazy"></iframe>`;
     else inner = `<img src="${esc(m.src)}" alt="${esc(m.caption || "")}" loading="lazy">`;
     return `<div class="media ${cls}" data-src="${esc(m.src)}" data-type="${esc(m.type || "image")}">${inner}</div>`;
@@ -88,6 +90,7 @@
           <div class="meta"><span>${esc(p.category)}${p.when ? " · " + esc(p.when) : ""}</span><span class="pill ${p.status === "In progress" ? "live" : ""}">${esc(p.status)}</span></div>
           <h3>${esc(p.title)}</h3>
           <p>${esc(p.summary)}</p>
+          ${p.stat ? `<div class="stat"><b>${esc(p.stat.value)}</b><span>${esc(p.stat.label)}</span></div>` : ""}
           <span class="more">Read case study →</span>
         </div>
       </button>`).join("") + `
@@ -126,7 +129,9 @@
       <h3>Process</h3>
       <ol class="steps">${(p.process || []).map((s) => `<li>${esc(s)}</li>`).join("")}</ol>
       <h3>Results</h3>
+      ${p.stat ? `<div class="stat big"><b>${esc(p.stat.value)}</b><span>${esc(p.stat.label)}</span></div>` : ""}
       <p>${esc(p.results)}</p>
+      ${p.lesson ? `<h3>What I learned</h3><blockquote class="lesson">${esc(p.lesson)}</blockquote>` : ""}
       ${p.tools && p.tools.length ? `<h3>Tools &amp; skills</h3><div class="tags">${p.tools.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : ""}
       ${files.length ? `<h3>Documents &amp; links</h3><div class="dl">${files.map((f) => `<a class="btn ghost" href="${esc(f.href)}" target="_blank" rel="noopener">${esc(f.label)}</a>`).join("")}</div>` : ""}`;
     dlg.querySelector(".db").scrollTop = 0;
@@ -146,18 +151,50 @@
   window.addEventListener("hashchange", fromHash);
   fromHash();
 
+  // ---------- now line ----------
+  if (S.now && S.now.text) {
+    const n = $("now");
+    n.innerHTML = `<span class="dot" aria-hidden="true"></span><b>Now</b><span class="nt">${esc(S.now.when)} · ${esc(S.now.text)}</span><span class="na">See the project →</span>`;
+    n.href = S.now.project ? "#" + S.now.project : "#projects";
+  } else $("now").parentElement.remove();
+
+  // ---------- compare slider ----------
+  const C = S.compare, cf = $("compare");
+  if (C && C.before && C.after) {
+    cf.innerHTML = `<div class="cmp" style="--x:50%">
+        <img src="${esc(C.after.src)}" alt="${esc(C.after.label)}" loading="lazy">
+        <div class="cmp-b"><img src="${esc(C.before.src)}" alt="${esc(C.before.label)}" loading="lazy"></div>
+        <span class="cmp-l l">${esc(C.before.label)}</span><span class="cmp-l r">${esc(C.after.label)}</span>
+        <span class="cmp-h" aria-hidden="true"></span>
+        <input type="range" min="0" max="100" value="50" aria-label="Drag to compare ${esc(C.before.label)} and ${esc(C.after.label)}">
+      </div>${C.caption ? `<figcaption>${esc(C.caption)}</figcaption>` : ""}`;
+    const box = cf.querySelector(".cmp");
+    cf.querySelector("input").addEventListener("input", (e) => box.style.setProperty("--x", e.target.value + "%"));
+  } else cf.remove();
+
   // ---------- welding ----------
   const W = S.welding;
   $("weldIntro").textContent = W.intro;
   $("skills").innerHTML = W.skills.map((s) => `<div><b>${esc(s.name)}</b><small>${esc(s.where)}</small><span>${esc(s.note)}</span></div>`).join("");
-  $("weldCar").outerHTML = carousel(W.gallery);
-  $("certs").innerHTML = (W.certs || []).map((c) => `<a class="btn ghost" href="${esc(c.href)}" target="_blank" rel="noopener">${esc(c.label)}</a>`).join("");
+  $("weldCar").outerHTML = (W.galleries || []).map((g) => `<div class="gal"><h3>${esc(g.title)}</h3>${carousel(g.items)}</div>`).join("");
+  $("certs").innerHTML = (W.certs || []).length ? `<h3 style="width:100%;margin:28px 0 4px">Certifications</h3>` + W.certs.map((c) => c.href
+    ? `<a class="btn ghost" href="${esc(c.href)}" target="_blank" rel="noopener">${esc(c.label)} ↗</a>`
+    : `<span class="cert">${esc(c.label)}</span>`).join("") : "";
 
   // ---------- experience ----------
   $("jobs").innerHTML = S.experience.map((j) => `
     <article class="job">
       <div class="when">${esc(j.when)}${j.where ? `<span>${esc(j.where)}</span>` : ""}</div>
-      <div><h3>${esc(j.org)}</h3><div class="r">${esc(j.role)}</div><p>${esc(j.text)}</p></div>
+      <div><h3>${esc(j.org)}</h3><div class="r">${esc(j.role)}</div><p>${esc(j.text)}</p>${(j.photos || []).length ? `<div class="jobpics">${j.photos.map((m) => media(m)).join("")}</div>` : ""}</div>
     </article>`).join("");
+  $("skillTags").innerHTML = (S.skills || []).map((s) => `<span>${esc(s)}</span>`).join("");
+  if (S.interests) $("interests").textContent = "Off the clock: " + S.interests;
   $("edu").innerHTML = S.education.map((e) => `<div><b>${esc(e.school)}</b><span>${esc(e.what)}</span>${e.when ? `<span>${esc(e.when)}</span>` : ""}</div>`).join("");
+
+  // ---------- gentle reveal on scroll ----------
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
+    const els = document.querySelectorAll(".band h2, .card, .tl li, .job, .skills, .gal, .compare, .edu");
+    const io = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { rootMargin: "0px 0px -8% 0px" });
+    els.forEach((el) => { el.classList.add("rv"); io.observe(el); });
+  }
 }

@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Riley Norton · Portfolio</title>
 <meta name="description" content="Riley Norton: mechanical engineering student at Texas Tech, Formula SAE cooling design lead and professional welder.">
+<meta name="theme-color" content="#c8102e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Riley Norton · Mechanical Engineering Portfolio">
+<meta property="og:description" content="Welder turned mechanical engineer. Formula SAE cooling design, chassis fabrication and a louvered radiator built from scratch.">
+<meta property="og:url" content="https://norton2003.github.io/">
+<meta property="og:image" content="https://norton2003.github.io/assets/images/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23141414'/%3E%3Crect x='9' y='9' width='14' height='14' fill='%23c8102e'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="assets/images/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -83,6 +92,7 @@
     </div>
     <div class="wrap stats" id="stats"></div>
   </section>
+  <div class="nowbar"><a class="wrap now" id="now" href="#"></a></div>
 
   <section class="band" id="story">
     <div class="wrap story">
@@ -90,9 +100,11 @@
         <div class="sheet"><b>Sheet 02</b> Story</div>
         <h2>From the welding booth to the design office</h2>
         <div class="media portrait" id="portrait"></div>
+        <p id="interests" style="color:var(--mute);font-size:15px;margin-top:14px"></p>
       </div>
       <ol class="tl" id="timeline"></ol>
     </div>
+    <figure class="wrap compare" id="compare"></figure>
   </section>
 
   <section class="band" id="projects" style="background:var(--steel);border-block:1px solid var(--line)">
@@ -130,6 +142,8 @@
         <aside class="edu">
           <h3>Education</h3>
           <div id="edu"></div>
+          <h3 style="margin-top:22px">Skills</h3>
+          <div class="tags" id="skillTags" style="margin-bottom:8px"></div>
           <a class="btn" id="eduResume" href="#" style="margin-top:12px">Download résumé</a>
         </aside>
       </div>
